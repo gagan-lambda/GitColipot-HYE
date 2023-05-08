@@ -1,37 +1,39 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: hyperexecute-workflow sample
-
+name: Hyperexecute-Playwright
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+  workflow_dispatch:
+    inputs:
+      username:
+        required: true
+        description: gagandeepb
+      accessKey:
+        description: wzgRUvmhiGodczTuOWhY0IkITni78467mDrYTFzbFwAMlMqaO7
+        required: true
+      sampleRepoLink:
+        description: Link to the HyperExecute sample repo
+        default: https://github.com/gagan-lambda/GitColipot-HYE
+        required: true
 jobs:
-  HyperExecute-Actions:
+  HyperExecute-Playwright:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
         os: [windows-latest]
-
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-        
+
       - name: Starting CLI testing
         shell: bash
-        run: 
-           echo "STEP 1 ) Downloading sample suite"
-          git clone https://github.com/gagan-lambda/GitColipot-HYE
+        run: |
+          echo "STEP 1 ) Downloading sample suite"
+          git clone ${{ github.event.inputs.sampleRepoLink }}
           echo "STEP 2) Download CLI and setting environment variables"
               cd GitColipot-HYE
-          ./hyperexecute --user gagandeepb --key wzgRUvmhiGodczTuOWhY0IkITni78467mDrYTFzbFwAMlMqaO7 --config yaml/win/cucumber_hyperexecute_autosplit_sample.yaml
+              curl https://downloads.lambdatest.com/hyperexecute/windows/hyperexecute.exe -o hyperexecute.exe
+              export LT_USERNAME=${{ github.event.inputs.username }}
+              export LT_ACCESS_KEY=${{ github.event.inputs.accessKey }}
+              echo $LT_USERNAME 
+              echo $LT_ACCESS_KEY
+              ./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/win/cucumber_hyperexecute_autosplit_sample.yaml
