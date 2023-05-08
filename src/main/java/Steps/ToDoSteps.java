@@ -20,7 +20,13 @@ public class ToDoSteps extends TestRunner
 		driver.get("https://lambdapro.github.io/GitColipot-HYE/");
 
 	}
-
+//add function for   Then verify the title of the page
+	@Then("^verify the title of the page$")
+	public void verify_the_title_of_the_page()
+	{
+		String title = driver.getTitle();
+		Assert.assertTrue(title.contains("Sample page - lambdatest.com"));
+	}
 	@When("^select First Item$")
 	public void select_first_item()
 	{
