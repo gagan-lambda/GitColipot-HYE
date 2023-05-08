@@ -13,14 +13,6 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    workflow_dispatch:
-    inputs:
-      username:
-        required: true
-        description: 'gagandeepb'
-      accessKey:
-        description: 'wzgRUvmhiGodczTuOWhY0IkITni78467mDrYTFzbFwAMlMqaO7'
-        required: true
 
 jobs:
   HyperExecute-Actions:
@@ -43,8 +35,4 @@ jobs:
           echo "STEP 2) Download CLI and setting environment variables"
               cd GitColipot-HYE
               curl https://downloads.lambdatest.com/hyperexecute/windows/hyperexecute.exe -o hyperexecute.exe
-              export LT_USERNAME=${{ github.event.inputs.username }}
-              export LT_ACCESS_KEY=${{ github.event.inputs.accessKey }}
-              echo $LT_USERNAME 
-              echo $LT_ACCESS_KEY
-              ./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/win/cucumber_hyperexecute_autosplit_sample.yaml
+              ./hyperexecute --user gagandeepb --key wzgRUvmhiGodczTuOWhY0IkITni78467mDrYTFzbFwAMlMqaO7 --config yaml/win/cucumber_hyperexecute_autosplit_sample.yaml
