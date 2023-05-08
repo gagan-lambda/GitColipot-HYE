@@ -32,8 +32,9 @@ jobs:
         os: [windows-latest]
 
     steps:
-    - name: Checkout sources
+      - name: Checkout sources
         uses: actions/checkout@v2
+        
       - name: Starting CLI testing
         shell: bash
         run: 
